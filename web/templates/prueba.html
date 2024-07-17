@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro e Inicio de Sesión</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/12b88bff3d.js" crossorigin="anonymous"></script>
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: #f6f5f7;
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    margin: 0; /* Elimina el margen externo */
+}
+
+.auth-container {
+    position: relative;
+    width: 758px;
+    max-width: 100%;
+    min-height: 480px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+}
+
+.auth-signup-form, .auth-signin-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.auth-signup-form {
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.auth-signin-form {
+    width: 50%;
+    z-index: 2;
+}
+
+form {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+h1 {
+    font-weight: bold;
+    margin: 0;
+}
+
+p {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 15px 0 20px;
+}
+
+input {
+    background: #eee;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+button {
+    color: #fff;
+    background: #3b5d50;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 55px;
+    margin: 10px 0; /* Reducido el margen */
+    border-radius: 20px;
+    border: 1px solid #3b5d50;
+    outline: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.90);
+}
+
+#signin-button, #signup-button {
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+.auth-container.right-panel-active .auth-signup-form {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+}
+
+.auth-container.right-panel-active .auth-signin-form {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.overlay-wrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%; /* Asegura que ocupe toda la altura */
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.auth-container.right-panel-active .overlay-wrapper {
+    transform: translateX(-100%);
+}
+
+.overlay-background {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%; /* Asegura que ocupe toda la altura */
+    width: 200%;
+    background: linear-gradient(to right, #3b5d50, #8fb2a5);
+    transition: transform 0.6s ease-in-out;
+}
+
+.auth-container.right-panel-active .overlay-background {
+    transform: translateX(50%);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 40px;
+    height: 100%;
+    width: 50%;
+}
+
+.overlay-panel-left {
+    transform: translateX(-20%);
+    left: 10%; /* Asegura que esté alineado a la izquierda */
+}
+
+.overlay-panel-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+/* Estilos del modal */
+.modal-container {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-wrapper {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px; /* Ancho máximo del modal */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.modal-close-button {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.modal-body {
+    margin-top: 10px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.modal-footer button {
+    background: #3b5d50;
+    border: none;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-footer button:hover {
+    background: #2b4a3c;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="auth-container" id="authContainer">
+        <div class="auth-signup-form">
+            <form action="#" method="post">
+                <h1>Crea una cuenta</h1>
+                <div class="social-container">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-google"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <p>O usa tu email para registrarte</p>
+                <input type="text" name="name" placeholder="Nombre y Apellidos" required="">
+                <input type="text" name="user" placeholder="Usuario" required="">
+                <input type="email" name="email" placeholder="Email" required="">
+                <input type="password" name="pass1" placeholder="Contraseña" required="">
+                <input type="password" name="pass2" placeholder="Repite contraseña" required="">
+                <button name="signupSubmit">Crea tu cuenta</button>
+            </form>
+        </div>
+        <div class="auth-signin-form">
+            <form action="#" method="post">
+                <h1>Inicia Sesión</h1>
+                <div class="social-container">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-google"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <p>O usa tu email para iniciar sesión</p>
+                <input type="email" name="email" placeholder="Email" required="">
+                <input type="password" name="pass1" placeholder="Contraseña" required="">
+                <a href="#">¿Has olvidado tu contraseña?</a>
+                <button id="signin-button">Inicia Sesión</button>
+            </form>
+        </div>
+        <div class="overlay-wrapper">
+            <div class="overlay-background">
+                <div class="overlay-panel overlay-panel-left">
+                    <h1>¡Te echábamos de menos!</h1>
+                    <p>Para mantenernos en contacto por favor regístrate con tu información personal</p>
+                    <button id="signup-button">Regístrate</button>
+                </div>
+                <div class="overlay-panel overlay-panel-right">
+                    <h1>¡Bienvenid@!</h1>
+                    <p>Introduce tus datos y comienza tu aventura con nosotros</p>
+                    <button id="signin-button">Inicia Sesión</button>
+                </div>
+            </div>
+        </div>
+   </div>
+
+    <!-- Modal -->
+    <div class="modal-container" id="termsModal">
+        <div class="modal-content-wrapper">
+            <div class="modal-header">
+                <h2>Términos y Condiciones</h2>
+                <span class="modal-close-button" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Aquí van los términos y condiciones. Puedes añadir todo el contenido legal necesario para tu aplicación o sitio web.</p>
+                <ul>
+                    <li>Artículo 1: Aceptación de términos.</li>
+                    <li>Artículo 2: Uso del servicio.</li>
+                    <li>Artículo 3: Derechos y responsabilidades.</li>
+                    <li>Artículo 4: Limitaciones de responsabilidad.</li>
+                    <li>Artículo 5: Modificaciones de los términos.</li>
+                </ul>
+                <!-- Agrega más contenido según sea necesario -->
+            </div>
+            <div class="modal-footer">
+                <button id="closeModalBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const signupButton = document.getElementById('signup-button');
+            const signinButton = document.getElementById('signin-button');
+            const authContainer = document.getElementById('authContainer');
+
+            signupButton.addEventListener('click', () => {
+                authContainer.classList.add('right-panel-active');
+            });
+
+            signinButton.addEventListener('click', () => {
+                authContainer.classList.remove('right-panel-active');
+            });
+
+            // Obtener el modal y los botones
+            const modal = document.getElementById('termsModal');
+            const closeModalButton = document.getElementById('closeModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            // Cerrar el modal
+            closeModalButton.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // Cerrar el modal al hacer clic fuera de él
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>

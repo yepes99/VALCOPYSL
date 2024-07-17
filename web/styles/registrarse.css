@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.auth-container * {
+    box-sizing: border-box;
+}
+.auth-container {
+    margin: 0 auto; /* Centrar horizontalmente */
+    padding: 0 10px; /* Añadir padding para evitar que el contenido se desborde en pantallas pequeñas */
+    max-width: 100%; /* Asegurarse de que el contenedor no exceda el ancho de la pantalla */
+}
+
+.auth-container body {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: #f6f5f7;
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+
+   
+}
+
+.auth-container .container {
+    position: relative;
+    width: 758px;
+    max-width: 100%;
+    min-height: 480px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+}
+
+.auth-container .sign-up, .auth-container .sign-in {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.auth-container .sign-up {
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.auth-container .sign-in {
+    width: 50%;
+    z-index: 2;
+}
+
+.auth-container form {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+.auth-container h1 {
+    font-weight: bold;
+    margin: 0;
+    font-size: 30px;
+}
+
+.auth-container p {
+    font-size: 14px;
+    font-weight: 100px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 15px 0 20px;
+}
+
+.auth-container input {
+    background: #eee;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.auth-container a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+.auth-container button {
+    color: #fff;
+    background: #3b5d50;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 55px;
+    margin: 10px 0;
+    border-radius: 20px;
+    border: 1px solid #3b5d50;
+    outline: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+}
+
+.auth-container button:active {
+    transform: scale(0.90);
+}
+
+.auth-container #signIn, .auth-container #signUp {
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+.auth-container .container.right-panel-active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+}
+
+.auth-container .container.right-panel-active .sign-in {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.auth-container .overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.auth-container .container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+.auth-container .overlay {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    background: linear-gradient(to right, #3b5d50, #8fb2a5);
+    transition: transform 0.6s ease-in-out;
+}
+
+.auth-container .container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.auth-container .overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 40px;
+    height: 100%;
+    width: 50%;
+}
+
+.auth-container .overlay-left {
+    transform: translateX(-20%);
+    left: 10%;
+}
+
+.auth-container .overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+/* Asegúrate de que todo el contenido de autenticación se oculta cuando el modal está activo */
+.auth-container .modal-active #main {
+    display: none; /* Oculta el formulario de autenticación cuando el modal está activo */
+}
+
+/* Estilos del modal */
+.auth-container .modal {
+    display: none; 
+    position: fixed;
+    z-index: 9999; /* Asegúrate de que el modal esté por encima de otros contenidos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Contenido del modal */
+.auth-container .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    z-index: 10000; /* Asegúrate de que el contenido del modal esté por encima del fondo del modal */
+}
+
+/* El botón de cerrar el modal */
+.auth-container .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.auth-container .close:hover,
+.auth-container .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos adicionales */
+.auth-container .modal-body ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.auth-container .modal-footer{
+    display: flex;
+    justify-content: space-between;
+}

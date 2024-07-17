@@ -5,7 +5,7 @@
 require_once __DIR__ . './app/libs/bGeneral.php';
 require_once __DIR__ . './app/controlador/controller.php';
 
-session_start(); // Se inicia la sesion
+session_start(); // Se inicia la sesión
 
 /**
  * Enrutamiento
@@ -17,26 +17,24 @@ session_start(); // Se inicia la sesion
 
 $map = array(
     'inicio' => array('controller' => 'Controller', 'action' => 'inicio'),
+    'registrarse' => array('controller' => 'Controller', 'action' => 'registrarse'),
 );
 
 // Parseo de la ruta
-if (isset($_GET['ctl'])) {
-    if (isset($map[$_GET['ctl']])) {
-        $ruta = $_GET['ctl'];
-    } else {
-        $ruta = "error";
-    }
+if (isset($_GET['ctl']) && isset($map[$_GET['ctl']])) {
+    $ruta = $_GET['ctl'];
 } else {
     $ruta = 'inicio';
 }
-$controlador = $map[$ruta];
+
+$controlador = isset($map[$ruta]) ? $map[$ruta] : null;
 
 /*
-Comprobamos si el metodo correspondiente a la acción relacionada con el valor de ctl existe,
+Comprobamos si el método correspondiente a la acción relacionada con el valor de ctl existe,
 si es así ejecutamos el método correspondiente.
-En caso de no existir cabecera de error.
+En caso de no existir, cabecera de error.
 */
-if (method_exists($controlador['controller'], $controlador['action'])) {
+if ($controlador && method_exists($controlador['controller'], $controlador['action'])) {
     call_user_func(array(
         new $controlador['controller'],
         $controlador['action']
@@ -44,8 +42,6 @@ if (method_exists($controlador['controller'], $controlador['action'])) {
 } else {
     header('Status: 404 Not Found');
     echo '<html><body><h1>Error 404: El controlador <i>' .
-        $controlador['controller'] .
-        '->' .
-        $controlador['action'] .
+        ($controlador ? $controlador['controller'] . '->' . $controlador['action'] : 'desconocido') .
         '</i> no existe</h1></body></html>';
 }

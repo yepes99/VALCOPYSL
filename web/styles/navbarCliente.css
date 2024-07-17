@@ -103,3 +103,72 @@
 .custom-navbar .custom-navbar-cta li:first-child {
   margin-right: 20px;
 }
+
+/* ICON ANIMATION */
+
+.navbar-nav .button-user,
+.navbar-nav .button-cart {
+    display: inline-block;
+    height: 50px; /* Aumento de altura */
+    width: 50px; /* Aumento de anchura */
+    margin: 0; /* Aumento del margen */
+    overflow: hidden;
+    background: #fff;
+    border-radius: 25px; /* Aumento del radio de borde */
+    cursor: pointer;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-out;
+}
+
+.button-user:hover,
+.button-cart:hover {
+    width: 160px; /* Aumento de anchura en hover */
+}
+
+.button-user .icon,
+.button-cart .icon {
+    display: inline-block;
+    height: 50px; /* Ajuste de altura */
+    width: 50px; /* Ajuste de anchura */
+    text-align: center;
+    border-radius: 25px; /* Ajuste del radio de borde */
+    box-sizing: border-box;
+    line-height: 50px; /* Ajuste de altura de línea */
+    transition: all 0.3s ease-out;
+    background: none;
+}
+
+.button-user .icon i,
+.button-cart .icon i {
+    font-size: 20px; /* Aumento de tamaño de fuente */
+    line-height: 50px; /* Ajuste de altura de línea */
+    margin-right: 1px;
+    transition: all 0.3s ease-out;
+    color: #000; /* Color negro para los iconos */
+}
+
+.button-user:hover .icon,
+.button-cart:hover .icon {
+    background: #aeafaf;
+}
+
+.button-user:hover .icon i,
+.button-cart:hover .icon i {
+    color: #090808; /* Cambio de color en hover */
+}
+
+.button-user span,
+.button-cart span {
+    font-size: 16px; /* Aumento de tamaño de fuente para el texto */
+    font-weight: 500;
+    line-height: 50px; /* Ajuste de altura de línea */
+    margin-left: 10px; /* Aumento del margen izquierdo */
+    transition: all 0.3s ease-out;
+    color: #4267B2; /* Texto azul */
+}
+
+.button-user:hover span,
+.button-cart:hover span {
+    display: inline-block; /* Asegura que el texto sea visible en hover */
+}
+
